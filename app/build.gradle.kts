@@ -1,12 +1,12 @@
-apply(plugin: "com.android.application")
-
-apply(plugin: "kotlin-android")
-
-apply(plugin: "kotlin-android-extensions")
+plugins {
+    id("com.android.application")
+    kotlin("android")
+    kotlin("android.extensions")
+}
 
 android {
-    compileSdkVersion = 29
-    buildToolsVersion = "29.0.2"
+    compileSdkVersion(29)
+
     defaultConfig {
         applicationId = "com.ddmeng.kotlindslsample"
         minSdkVersion(21)
@@ -16,17 +16,16 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        release {
-            minifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro")
+        getByName("release") {
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
 }
 
 dependencies {
-    implementation(fileTree(dir: "libs", include: ["*.jar"]))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version")
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation(kotlin("stdlib-jdk7", org.jetbrains.kotlin.config.KotlinCompilerVersion.VERSION))
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.core:core-ktx:1.0.2")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
